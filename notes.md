@@ -11,3 +11,5 @@
 * HAVE to return something, no such thing as void like thrift, but theres an empty message type
 
 * Need some sort of persistent storage so im going to use PostgreSQL
+
+* Service implementation in pkg/service will query the db and handle the requests
