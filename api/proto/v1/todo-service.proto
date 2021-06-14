@@ -3,8 +3,10 @@ package v1;
 
 import "google/protobuf/timestamp.proto";
 
+option go_package = "pkg/api/v1";
+
 // Tasks to do
-message Todo {
+message ToDo {
 
     int64 id = 1;
     string title = 2;
@@ -17,7 +19,8 @@ message Todo {
 message CreateRequest {
     // API versioning
     string api = 1; 
-    Todo toDo = 2;
+    // Task to add
+    ToDo toDo = 2;
 
 }
 
@@ -29,9 +32,77 @@ message CreateResponse {
 
 }
 
+// Request data to read
+message ReadRequest {
+
+    string api = 1;
+    int64 id = 2;
+
+}
+
+// Response data to read
+message ReadResponse {
+
+    string api = 1;
+    ToDo toDo = 2;
+
+}
+
+// Update req
+message UpdateRequest {
+
+    string api = 1;
+    ToDo toDo = 2;
+
+}
+
+// Update resp
+message UpdateResponse {
+
+    string api = 1;
+    int64 updated = 2;
+
+}
+
+// Delete req
+message DeleteRequest {
+
+    string api = 1;
+    int64 id = 2;
+
+}
+
+// Delete Resp
+message DeleteResponse {
+
+    string api = 1;
+    // Contains number of deleted tasks
+    int64 deleted = 2;
+
+}
+
+// Read all req (no id required)
+message ReadAllRequest {
+
+    string api = 1;
+
+}
+
+message ReadAllResponse {
+
+    string api = 1;
+    // arrays use the word repeated
+    repeated ToDo toDos = 2;
+
+}
+
 // Service to manage list of tasks
 service ToDoService {
     
     rpc Create(CreateRequest) returns (CreateResponse);
-    
+    rpc Read(ReadRequest) returns (ReadResponse);
+    rpc Update(UpdateRequest) returns (UpdateResponse);
+    rpc Delete(DeleteRequest) returns (DeleteResponse);
+    rpc ReadAll(ReadAllRequest) returns (ReadAllResponse);
+
 }
